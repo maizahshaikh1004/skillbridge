@@ -1,0 +1,187 @@
+<!-- pages/subjects.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SkillBridge – Select Subject</title>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="../css/style.css" />
+
+  <!-- Google Fonts for Devanagari support -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Noto+Sans+Devanagari:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <style>
+    body { font-family: 'Poppins', 'Noto Sans Devanagari', sans-serif; }
+    .devanagari { font-family: 'Noto Sans Devanagari', sans-serif; }
+  </style>
+</head>
+
+<body class="bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 min-h-screen">
+
+  <!-- Header -->
+  <header class="bg-white shadow-md py-6">
+    <div class="container mx-auto px-4 text-center">
+      <img src="../assets/logo.png" alt="SkillBridge Logo" class="h-16 mx-auto mb-3" />
+      <h1 id="pageTitle" class="text-3xl md:text-4xl font-bold text-gray-800">
+        Select Your Subject
+      </h1>
+      <p id="pageSubtitle" class="text-lg text-gray-600 mt-2">
+        Choose a subject to start practicing
+      </p>
+    </div>
+  </header>
+
+<div class="text-center py-6">
+  <p id="welcomeMessage" class="text-2xl font-semibold text-indigo-700 hidden"></p>
+</div>
+  <!-- Main Content -->
+  <main class="container mx-auto px-4 py-12">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+
+      <!-- Subject Cards (will be populated by JS) -->
+      <div id="subjectGrid" class="contents">
+        <!-- JS will inject cards here -->
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-gray-800 text-white py-6 mt-16">
+    <div class="container mx-auto px-4 text-center">
+      <p class="text-sm">Made with ❤️ for Maharashtra Board Students | Hackathon 2025</p>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="../js/main.js"></script>
+  <script>
+    // Translation object
+    const translations = {
+      en: {
+        pageTitle: "Select Your Subject",
+        pageSubtitle: "Choose a subject to start practicing",
+        uploadCardTitle: "Upload Your Own Notes",
+        uploadCardDesc: "Generate a custom quiz from your PDF or TXT notes",
+        uploadButton: "Upload & Generate Quiz",
+        subjects: {
+          math: { name: "Mathematics", desc: "Algebra, Geometry, Arithmetic & more" },
+          science: { name: "Science", desc: "Physics, Chemistry, Biology" },
+          english: { name: "English", desc: "Grammar, Literature & Comprehension" },
+          marathi: { name: "मराठी", desc: "व्याकरण, साहित्य आणि आकलन" },
+          history: { name: "History", desc: "Ancient, Medieval & Modern History" }
+          // Add more subjects here as you create JSON files
+        }
+      },
+      hi: {
+        pageTitle: "अपना विषय चुनें",
+        pageSubtitle: "अभ्यास शुरू करने के लिए एक विषय चुनें",
+        uploadCardTitle: "अपने नोट्स अपलोड करें",
+        uploadCardDesc: "अपने PDF या TXT नोट्स से कस्टम क्विज़ बनाएं",
+        uploadButton: "अपलोड करें और क्विज़ बनाएं",
+        subjects: {
+          math: { name: "गणित", desc: "बीजगणित, ज्यामिति, अंकगणित और अधिक" },
+          science: { name: "विज्ञान", desc: "भौतिकी, रसायन विज्ञान, जीव विज्ञान" },
+          english: { name: "अंग्रेज़ी", desc: "व्याकरण, साहित्य और समझ" },
+          marathi: { name: "मराठी", desc: "व्याकरण, साहित्य आणि समज" },
+          history: { name: "इतिहास", desc: "प्राचीन, मध्यकालीन और आधुनिक इतिहास" }
+        }
+      },
+      mr: {
+        pageTitle: "तुमचा विषय निवडा",
+        pageSubtitle: "सराव सुरू करण्यासाठी एक विषय निवडा",
+        uploadCardTitle: "तुमचे स्वतःचे नोट्स अपलोड करा",
+        uploadCardDesc: "तुमच्या PDF किंवा TXT नोट्सपासून कस्टम क्विझ तयार करा",
+        uploadButton: "अपलोड करा आणि क्विझ तयार करा",
+        subjects: {
+          math: { name: "गणित", desc: "बीजगणित, भूमिती, अंकगणित आणि अधिक" },
+          science: { name: "विज्ञान", desc: "भौतिकशास्त्र, रसायनशास्त्र, जीवशास्त्र" },
+          english: { name: "इंग्रजी", desc: "व्याकरण, साहित्य आणि आकलन" },
+          marathi: { name: "मराठी", desc: "व्याकरण, साहित्य आणि आकलन" },
+          history: { name: "इतिहास", desc: "प्राचीन, मध्ययुगीन आणि आधुनिक इतिहास" }
+        }
+      }
+    };
+
+    // Get selected language
+    const lang = localStorage.getItem('userLanguage') || 'en';
+    const t = translations[lang];
+
+    // Update page text
+    document.getElementById('pageTitle').textContent = t.pageTitle;
+    document.getElementById('pageSubtitle').textContent = t.pageSubtitle;
+
+    // Subject keys and corresponding JSON files
+    const subjectKeys = ['math', 'science', 'english', 'marathi', 'history']; // Add more as needed
+
+    // Generate subject cards
+    const grid = document.getElementById('subjectGrid');
+
+    subjectKeys.forEach(key => {
+      const sub = t.subjects[key];
+      if (!sub) return; // Skip if not translated yet
+
+      const card = document.createElement('div');
+      card.className = "bg-white rounded-2xl shadow-lg hover:shadow-2xl transform hover:-translate-y-2 transition-all duration-300 p-8 text-center border-4 border-transparent hover:border-indigo-400";
+
+      card.innerHTML = `
+        <div class="text-6xl mb-4">📚</div>
+        <h2 class="text-2xl font-bold text-gray-800 mb-3 ${lang !== 'en' ? 'devanagari' : ''}">${sub.name}</h2>
+        <p class="text-gray-600 mb-6 ${lang !== 'en' ? 'devanagari' : ''}">${sub.desc}</p>
+        <a href="quiz.html?subject=${key}" 
+           class="inline-block bg-indigo-600 text-white px-6 py-3 rounded-full hover:bg-indigo-700 font-medium">
+           Start Quiz
+        </a>
+      `;
+
+      grid.appendChild(card);
+    });
+
+    // Upload Your Notes Card (always at the end)
+    const uploadCard = document.createElement('div');
+    uploadCard.className = "bg-gradient-to-br from-green-400 to-teal-500 rounded-2xl shadow-lg hover:shadow-2xl transform hover:-translate-y-2 transition-all duration-300 p-8 text-center text-white";
+
+    uploadCard.innerHTML = `
+      <div class="text-6xl mb-4">📤</div>
+      <h2 class="text-2xl font-bold mb-3 ${lang !== 'en' ? 'devanagari' : ''}">${t.uploadCardTitle}</h2>
+      <p class="mb-6 opacity-90 ${lang !== 'en' ? 'devanagari' : ''}">${t.uploadCardDesc}</p>
+      <a href="upload.html" 
+         class="inline-block bg-white text-green-600 px-6 py-3 rounded-full hover:bg-gray-100 font-bold">
+         ${t.uploadButton}
+      </a>
+    `;
+
+    grid.appendChild(uploadCard);
+  </script>
+<script>
+  // Personalized Welcome on Subjects Page
+  document.addEventListener('DOMContentLoaded', () => {
+    const session = JSON.parse(localStorage.getItem('skillbridge_session') || '{}');
+    const welcomeEl = document.getElementById('welcomeMessage');
+
+    if (session.userName) {
+      const greetings = {
+        en: `Welcome back, ${session.userName}! 👋`,
+        hi: `वापस स्वागत है, ${session.userName}! 👋`,
+        mr: `पुन्हा स्वागत आहे, ${session.userName}! 👋`
+      };
+      const lang = localStorage.getItem('userLanguage') || 'en';
+      welcomeEl.textContent = greetings[lang] || greetings.en;
+      welcomeEl.classList.remove('hidden');
+    } else if (session.loginType === 'guest') {
+      const guestGreetings = {
+        en: "Welcome, Guest! Let's learn together 👋",
+        hi: "स्वागत है, अतिथि! चलो साथ में सीखें 👋",
+        mr: "स्वागत आहे, पाहुणे! चला एकत्र शिकूया 👋"
+      };
+      const lang = localStorage.getItem('userLanguage') || 'en';
+      welcomeEl.textContent = guestGreetings[lang];
+      welcomeEl.classList.remove('hidden');
+    }
+  });
+</script>
+</body>
+</html>

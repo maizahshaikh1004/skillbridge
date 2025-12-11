@@ -1,0 +1,218 @@
+<!-- pages/recommendations.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SkillBridge – Personalized Recommendations</title>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="../css/style.css" />
+
+  <!-- Google Fonts for Devanagari -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Noto+Sans+Devanagari:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <style>
+    body { font-family: 'Poppins', 'Noto Sans Devanagari', sans-serif; }
+    .devanagari { font-family: 'Noto Sans Devanagari', sans-serif; }
+  </style>
+</head>
+
+<body class="bg-gradient-to-br from-purple-50 via-pink-50 to-indigo-50 min-h-screen py-8">
+
+  <!-- Header -->
+  <header class="bg-white shadow-md py-6 mb-8">
+    <div class="container mx-auto px-4 text-center">
+      <img src="../assets/logo.png" alt="SkillBridge Logo" class="h-16 mx-auto mb-4" />
+      <h1 id="pageTitle" class="text-4xl font-bold text-gray-800">Personalized Recommendations</h1>
+      <p id="pageSubtitle" class="text-xl text-gray-600 mt-3">Learn from your mistakes and get stronger!</p>
+    </div>
+  </header>
+
+  <main class="container mx-auto px-4 max-w-5xl">
+
+    <!-- Loading State -->
+    <div id="loadingState" class="text-center py-20">
+      <div class="animate-spin rounded-full h-16 w-16 border-b-4 border-purple-600 mx-auto"></div>
+      <p class="mt-6 text-2xl text-gray-700 devanagari">Generating your personalized recommendations...</p>
+    </div>
+
+    <!-- Recommendations Content (hidden initially) -->
+    <div id="recommendationsContent" class="hidden space-y-12">
+
+      <!-- Overall Summary -->
+      <div class="bg-white rounded-3xl shadow-xl p-8">
+        <h2 id="summaryTitle" class="text-3xl font-bold text-indigo-700 mb-4 devanagari">Your Performance Summary</h2>
+        <p id="summaryText" class="text-lg text-gray-700 leading-relaxed devanagari"></p>
+      </div>
+
+      <!-- Weak Topics Explanations -->
+      <div id="explanationsSection">
+        <h2 id="explanationsTitle" class="text-3xl font-bold text-purple-700 mb-8 text-center devanagari">Detailed Explanations & Tips</h2>
+        <div id="explanationsContainer" class="grid md:grid-cols-1 lg:grid-cols-2 gap-8">
+          <!-- Explanations injected by JS -->
+        </div>
+      </div>
+
+      <!-- Practice Questions -->
+      <div id="practiceSection" class="bg-gradient-to-r from-indigo-100 to-purple-100 rounded-3xl p-10">
+        <h2 id="practiceTitle" class="text-3xl font-bold text-indigo-800 mb-8 text-center devanagari">Extra Practice Questions</h2>
+        <div id="practiceContainer" class="space-y-8"></div>
+      </div>
+
+      <!-- Final Motivation -->
+      <div class="text-center bg-white rounded-3xl shadow-xl p-10">
+        <p id="motivationText" class="text-2xl font-semibold text-gray-800 devanagari"></p>
+        <div class="mt-8">
+          <a href="subjects.html" class="inline-block bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-10 py-4 rounded-full text-xl font-bold hover:shadow-2xl transform hover:-translate-y-1 transition-all">
+            Practice Again
+          </a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="text-center text-gray-500 mt-16 text-sm">
+    Made with ❤️ for Maharashtra Board Students | Hackathon 2025
+  </footer>
+
+  <script src="../js/main.js"></script>
+  <script>
+    // Translations
+    const translations = {
+      en: {
+        pageTitle: "Personalized Recommendations",
+        pageSubtitle: "Learn from your mistakes and get stronger!",
+        loading: "Generating your personalized recommendations...",
+        summaryTitle: "Your Performance Summary",
+        summaryGood: "Excellent work! You have a strong grasp of the material. Here are a few advanced tips to master it completely.",
+        summaryAverage: "Good effort! You've understood many concepts, but there are a few areas where focused practice will help you improve quickly.",
+        summaryNeedsWork: "Great start! Let's focus on the topics below. With a little practice, you'll master them in no time!",
+        explanationsTitle: "Detailed Explanations & Tips",
+        practiceTitle: "Extra Practice Questions",
+        motivation: "Keep practicing – you're on your way to becoming a pro! 🚀",
+        tipPrefix: "Tip:",
+        generatedByAI: "Powered by AI"
+      },
+      hi: {
+        pageTitle: "वैयक्तिक सिफारिशें",
+        pageSubtitle: "अपनी गलतियों से सीखें और मजबूत बनें!",
+        loading: "आपकी वैयक्तिक सिफारिशें तैयार की जा रही हैं...",
+        summaryTitle: "आपके प्रदर्शन का सारांश",
+        summaryGood: "शानदार काम! आपको सामग्री की अच्छी समझ है। यहां कुछ उन्नत टिप्स हैं जिनसे आप इसे पूरी तरह महारत हासिल कर सकते हैं।",
+        summaryAverage: "अच्छा प्रयास! आपने कई अवधारणाओं को समझ लिया है, लेकिन कुछ क्षेत्र ऐसे हैं जहां केंद्रित अभ्यास से आप जल्दी सुधार कर सकते हैं।",
+        summaryNeedsWork: "शानदार शुरुआत! आइए नीचे दिए गए विषयों पर ध्यान दें। थोड़े अभ्यास से आप इन्हें जल्दी महारत हासिल कर लेंगे!",
+        explanationsTitle: "विस्तृत व्याख्या और सुझाव",
+        practiceTitle: "अतिरिक्त अभ्यास प्रश्न",
+        motivation: "अभ्यास जारी रखें – आप प्रो बनने की राह पर हैं! 🚀",
+        tipPrefix: "सुझाव:",
+        generatedByAI: "AI द्वारा संचालित"
+      },
+      mr: {
+        pageTitle: "वैयक्तिक शिफारशी",
+        pageSubtitle: "तुमच्या चुका शिका आणि मजबूत व्हा!",
+        loading: "तुमच्या वैयक्तिक शिफारशी तयार होत आहेत...",
+        summaryTitle: "तुमच्या कामगिरीचा सारांश",
+        summaryGood: "उत्तम काम! तुम्हाला साहित्याची चांगली समज आहे. पूर्णपणे प्रभुत्व मिळवण्यासाठी काही प्रगत टिपा येथे आहेत।",
+        summaryAverage: "छान प्रयत्न! तुम्ही बरेच संकल्पना समजून घेतल्या आहेत, परंतु काही क्षेत्रे अशी आहेत जिथे केंद्रित सराव तुम्हाला लवकर सुधारण्यास मदत करेल।",
+        summaryNeedsWork: "छान सुरुवात! खालील विषयांवर लक्ष केंद्रित करूया। थोड्या सरावाने तुम्ही त्यात प्रभुत्व मिळवाल!",
+        explanationsTitle: "तपशीलवार स्पष्टीकरण आणि टिपा",
+        practiceTitle: "अतिरिक्त सराव प्रश्न",
+        motivation: "सराव सुरू ठेवा – तुम्ही प्रो होण्याच्या मार्गावर आहात! 🚀",
+        tipPrefix: "टिप:",
+        generatedByAI: "AI द्वारे संचालित"
+      }
+    };
+
+    const lang = localStorage.getItem('userLanguage') || 'en';
+    const t = translations[lang];
+
+    // Update static text
+    document.getElementById('pageTitle').textContent = t.pageTitle;
+    document.getElementById('pageSubtitle').textContent = t.pageSubtitle;
+    document.querySelector('#loadingState p').textContent = t.loading;
+
+    // Retrieve quiz data
+    const score = parseInt(localStorage.getItem('lastScore') || '0');
+    const total = parseInt(localStorage.getItem('lastTotal') || '0');
+    const questions = JSON.parse(localStorage.getItem('lastQuestions') || '[]');
+    const userAnswers = JSON.parse(localStorage.getItem('lastAnswers') || '[]');
+
+    const percentage = total > 0 ? Math.round((score / total) * 100) : 0;
+
+    // Determine summary message
+    let summaryText;
+    if (percentage >= 80) summaryText = t.summaryGood;
+    else if (percentage >= 50) summaryText = t.summaryAverage;
+    else summaryText = t.summaryNeedsWork;
+
+    document.getElementById('summaryText').textContent = summaryText;
+
+    // Find weak questions
+    const weakQuestions = questions
+      .map((q, i) => ({ question: q, userAns: userAnswers[i], correctAns: q.answer, index: i }))
+      .filter(item => item.userAns !== item.correctAns);
+
+    // Generate Mock AI Recommendations (since no real Gemini API in frontend demo)
+    // In a real app, you'd call your backend here that uses Gemini
+    setTimeout(() => {
+      document.getElementById('loadingState').classList.add('hidden');
+      document.getElementById('recommendationsContent').classList.remove('hidden');
+
+      const explanationsContainer = document.getElementById('explanationsContainer');
+      const practiceContainer = document.getElementById('practiceContainer');
+
+      if (weakQuestions.length === 0) {
+        explanationsContainer.innerHTML = `
+          <div class="col-span-2 text-center py-16">
+            <div class="text-6xl mb-4">🎉</div>
+            <p class="text-2xl font-bold text-green-600 devanagari">Perfect Score! No weak areas detected.</p>
+            <p class="text-lg text-gray-600 mt-4 devanagari">You're ready for advanced challenges!</p>
+          </div>`;
+      } else {
+        weakQuestions.forEach((item, idx) => {
+          const q = item.question;
+
+          // Mock Explanation Card
+          const expCard = document.createElement('div');
+          expCard.className = "bg-gradient-to-br from-purple-50 to-indigo-50 rounded-2xl p-8 shadow-lg";
+          expCard.innerHTML = `
+            <h3 class="text-xl font-bold text-purple-800 mb-4 devanagari">Topic ${idx + 1}: ${q.question.substring(0, 80)}...</h3>
+            <p class="text-gray-700 leading-relaxed devanagari mb-4">
+              <strong>Why this is important:</strong> This concept builds the foundation for advanced topics in the subject.
+            </p>
+            <p class="text-gray-700 leading-relaxed devanagari mb-4">
+              <strong>${t.tipPrefix}</strong> Focus on understanding the core principle first. Try drawing diagrams or teaching it to someone else.
+            </p>
+            <p class="text-sm text-gray-500 italic">${t.generatedByAI}</p>
+          `;
+          explanationsContainer.appendChild(expCard);
+
+          // Mock Practice Questions
+          const practiceCard = document.createElement('div');
+          practiceCard.className = "bg-white rounded-xl shadow-md p-6";
+          practiceCard.innerHTML = `
+            <p class="font-medium text-lg mb-4 devanagari">${idx + 1}. Which of the following is the correct approach for this concept?</p>
+            <ul class="space-y-3">
+              <li class="flex items-center"><span class="mr-3">A)</span> <span class="devanagari">Revise basic definitions</span></li>
+              <li class="flex items-center"><span class="mr-3">B)</span> <span class="devanagari">Practice similar problems daily</span></li>
+              <li class="flex items-center text-green-600 font-bold"><span class="mr-3">C)</span> <span class="devanagari">Both A and B (Correct)</span></li>
+              <li class="flex items-center"><span class="mr-3">D)</span> <span class="devanagari">Skip and move ahead</span></li>
+            </ul>
+          `;
+          practiceContainer.appendChild(practiceCard);
+        });
+      }
+
+      // Update titles
+      document.getElementById('summaryTitle').textContent = t.summaryTitle;
+      document.getElementById('explanationsTitle').textContent = t.explanationsTitle;
+      document.getElementById('practiceTitle').textContent = t.practiceTitle;
+      document.getElementById('motivationText').textContent = t.motivation;
+
+    }, 2000); // Simulate AI processing time for demo
+  </script>
+</body>
+</html>

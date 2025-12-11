@@ -1,0 +1,214 @@
+<!-- pages/results.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SkillBridge – Quiz Results</title>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="../css/style.css" />
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Noto+Sans+Devanagari:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <style>
+    body { font-family: 'Poppins', 'Noto Sans Devanagari', sans-serif; }
+    .devanagari { font-family: 'Noto Sans Devanagari', sans-serif; }
+  </style>
+</head>
+
+<body class="bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 min-h-screen py-8">
+
+  <!-- Header -->
+  <header class="bg-white shadow-md py-6 mb-8">
+    <div class="container mx-auto px-4 text-center">
+      <img src="../assets/logo.png" alt="SkillBridge Logo" class="h-16 mx-auto mb-4" />
+      <h1 id="resultsTitle" class="text-4xl font-bold text-gray-800">Your Quiz Results</h1>
+    </div>
+  </header>
+
+  <main class="container mx-auto px-4 max-w-5xl">
+
+    <!-- Score Card -->
+    <div class="bg-white rounded-3xl shadow-2xl p-10 text-center mb-10 transform hover:scale-105 transition-transform duration-300">
+      <div class="text-8xl mb-6" id="scoreEmoji">🎉</div>
+      <h2 class="text-5xl font-bold text-indigo-600 mb-4">
+        <span id="scoreDisplay">0</span> / <span id="totalDisplay">0</span>
+      </h2>
+      <p class="text-2xl text-gray-700 mb-2" id="percentageDisplay">0%</p>
+      <p class="text-xl text-gray-600" id="performanceMessage">Great effort!</p>
+    </div>
+
+    <!-- Weak Topics (if any) -->
+    <div id="weakTopicsSection" class="hidden bg-yellow-50 border-2 border-yellow-300 rounded-2xl p-8 mb-8">
+      <h3 class="text-2xl font-bold text-yellow-800 mb-4 devanagari" id="weakTopicsTitle">Areas to Improve</h3>
+      <ul id="weakTopicsList" class="space-y-3 text-lg text-gray-700 devanagari"></ul>
+    </div>
+
+    <!-- Review Answers -->
+    <div class="bg-white rounded-2xl shadow-xl p-8 mb-10">
+      <h3 class="text-2xl font-bold text-gray-800 mb-6 devanagari">Question Review</h3>
+      <div id="reviewContainer" class="space-y-8"></div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="flex flex-col sm:flex-row gap-6 justify-center">
+      <a href="recommendations.html" class="bg-gradient-to-r from-purple-600 to-indigo-600 text-white px-10 py-4 rounded-full text-xl font-bold hover:shadow-xl transform hover:-translate-y-1 transition-all text-center">
+        Get Personalized Recommendations
+      </a>
+      <a href="subjects.html" class="bg-gray-600 text-white px-10 py-4 rounded-full text-xl font-bold hover:bg-gray-700 transform hover:-translate-y-1 transition-all text-center">
+        Back to Subjects
+      </a>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="text-center text-gray-500 mt-16 text-sm">
+    Made with ❤️ for Maharashtra Board Students | Hackathon 2025
+  </footer>
+
+  <script src="../js/main.js"></script>
+  <script>
+    // Translations
+    const translations = {
+      en: {
+        resultsTitle: "Your Quiz Results",
+        performance: {
+          excellent: "Outstanding! You're a star! 🌟",
+          good: "Well done! Keep practicing! 👍",
+          average: "Good effort! You can do better! 💪",
+          low: "Don't give up! Let's learn together! 🚀"
+        },
+        weakTopicsTitle: "Areas to Improve",
+        noWeakTopics: "Amazing! You got everything right! 🎉",
+        correct: "Correct",
+        incorrect: "Incorrect",
+        yourAnswer: "Your Answer",
+        correctAnswer: "Correct Answer",
+        explanation: "Explanation",
+        noExplanation: "No explanation provided."
+      },
+      hi: {
+        resultsTitle: "आपके क्विज़ के परिणाम",
+        performance: {
+          excellent: "शानदार! आप सितारे हैं! 🌟",
+          good: "बहुत अच्छा! अभ्यास जारी रखें! 👍",
+          average: "अच्छा प्रयास! आप और बेहतर कर सकते हैं! 💪",
+          low: "हार मत मानो! आइए साथ में सीखें! 🚀"
+        },
+        weakTopicsTitle: "सुधार के क्षेत्र",
+        noWeakTopics: "अद्भुत! आपने सब सही किया! 🎉",
+        correct: "सही",
+        incorrect: "गलत",
+        yourAnswer: "आपका उत्तर",
+        correctAnswer: "सही उत्तर",
+        explanation: "व्याख्या",
+        noExplanation: "कोई व्याख्या उपलब्ध नहीं।"
+      },
+      mr: {
+        resultsTitle: "तुमच्या क्विझचे निकाल",
+        performance: {
+          excellent: "उत्तम! तुम्ही स्टार आहात! 🌟",
+          good: "छान केले! सराव सुरू ठेवा! 👍",
+          average: "चांगला प्रयत्न! तुम्ही अधिक चांगले करू शकता! 💪",
+          low: "हारू नका! चला एकत्र शिकूया! 🚀"
+        },
+        weakTopicsTitle: "सुधारण्याची क्षेत्रे",
+        noWeakTopics: "अद्भुत! तुम्ही सर्व काही बरोबर केले! 🎉",
+        correct: "बरोबर",
+        incorrect: "चुकीचे",
+        yourAnswer: "तुमचे उत्तर",
+        correctAnswer: "बरोबर उत्तर",
+        explanation: "स्पष्टीकरण",
+        noExplanation: "कोणतेही स्पष्टीकरण उपलब्ध नाही."
+      }
+    };
+
+    const lang = localStorage.getItem('userLanguage') || 'en';
+    const t = translations[lang];
+
+    // Update title
+    document.getElementById('resultsTitle').textContent = t.resultsTitle;
+
+    // Retrieve quiz data
+    const score = parseInt(localStorage.getItem('lastScore') || '0');
+    const total = parseInt(localStorage.getItem('lastTotal') || '0');
+    const userAnswers = JSON.parse(localStorage.getItem('lastAnswers') || '[]');
+    const questions = JSON.parse(localStorage.getItem('lastQuestions') || '[]');
+
+    if (total === 0 || questions.length === 0) {
+      document.body.innerHTML = `<div class="text-center py-20 text-2xl">No results found. <a href="subjects.html" class="text-indigo-600 underline">Go back</a></div>`;
+    }
+
+    const percentage = Math.round((score / total) * 100);
+
+    // Update score display
+    document.getElementById('scoreDisplay').textContent = score;
+    document.getElementById('totalDisplay').textContent = total;
+    document.getElementById('percentageDisplay').textContent = `${percentage}%`;
+
+    // Performance message & emoji
+    let message, emoji;
+    if (percentage >= 90) { message = t.performance.excellent; emoji = "🌟"; }
+    else if (percentage >= 70) { message = t.performance.good; emoji = "🎉"; }
+    else if (percentage >= 50) { message = t.performance.average; emoji = "💪"; }
+    else { message = t.performance.low; emoji = "🚀"; }
+
+    document.getElementById('scoreEmoji').textContent = emoji;
+    document.getElementById('performanceMessage').textContent = message;
+
+    // Weak topics (simple: list questions you got wrong)
+    const wrongQuestions = questions
+      .map((q, i) => ({ q, i }))
+      .filter(({ q, i }) => userAnswers[i] !== q.answer);
+
+    if (wrongQuestions.length > 0) {
+      document.getElementById('weakTopicsSection').classList.remove('hidden');
+      document.getElementById('weakTopicsTitle').textContent = t.weakTopicsTitle;
+
+      const list = document.getElementById('weakTopicsList');
+      wrongQuestions.forEach(({ q }) => {
+        const li = document.createElement('li');
+        li.className = "bg-yellow-100 p-4 rounded-lg";
+        li.textContent = q.question.substring(0, 80) + (q.question.length > 80 ? "..." : "");
+        list.appendChild(li);
+      });
+    }
+
+    // Review each question
+    const reviewContainer = document.getElementById('reviewContainer');
+    questions.forEach((q, idx) => {
+      const userAns = userAnswers[idx];
+      const correctAns = q.answer;
+      const isCorrect = userAns === correctAns;
+
+      const div = document.createElement('div');
+      div.className = `border-l-4 ${isCorrect ? 'border-green-500 bg-green-50' : 'border-red-500 bg-red-50'} pl-6 py-6 rounded-r-xl`;
+
+      div.innerHTML = `
+        <p class="font-semibold text-lg mb-3 devanagari">${idx + 1}. ${q.question}</p>
+        
+        <div class="grid md:grid-cols-2 gap-4 text-lg">
+          <div class="${isCorrect ? 'text-green-700' : 'text-red-700'}">
+            <span class="font-medium">${t.yourAnswer}:</span> 
+            ${userAns !== null ? q.options[userAns] : '<i>Not answered</i>'}
+          </div>
+          <div class="text-green-700">
+            <span class="font-medium">${t.correctAnswer}:</span> ${q.options[correctAns]}
+          </div>
+        </div>
+
+        ${q.explanation ? `
+          <div class="mt-4 p-4 bg-gray-100 rounded-lg devanagari">
+            <span class="font-medium text-gray-700">${t.explanation}:</span> ${q.explanation}
+          </div>
+        ` : ''}
+      `;
+
+      reviewContainer.appendChild(div);
+    });
+  </script>
+</body>
+</html>

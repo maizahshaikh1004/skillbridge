@@ -1,0 +1,106 @@
+<!-- pages/language.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SkillBridge – Choose Your Language</title>
+  <meta name="description" content="Learn in the language you love – English, हिंदी मराठी" />
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="../css/style.css" />
+  <!-- Optional: Custom font (Google Fonts - Poppins + Noto Sans Devanagari) -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Noto+Sans+Devanagari:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <style>
+    body { font-family: 'Poppins', 'Noto Sans Devanagari', sans-serif; }
+    .devanagari { font-family: 'Noto Sans Devanagari', sans-serif; }
+  </style>
+</head>
+
+<body class="bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 min-h-screen flex items-center justify-center p-4">
+
+  <div class="max-w-4xl w-full">
+
+    <!-- Header -->
+    <div class="text-center mb-10">
+      <img src="../assets/logo.png" alt="SkillBridge Logo" class="h-20 mx-auto mb-4 drop-shadow-md" />
+      <h1 class="text-4xl md:text-5xl font-bold text-gray-800 mb-3">
+        Welcome to <span class="text-indigo-600">SkillBridge</span>
+      </h1>
+      <p class="text-xl text-gray-600">Choose your preferred language</p>
+      <p class="text-lg text-gray-500 mt-2">आपली आवडती भाषा निवडा</p>
+    </div>
+
+    <!-- Language Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-3xl mx-auto">
+
+      <!-- English -->
+      <button onclick="selectLanguage('en')"
+        class="group relative bg-white rounded-2xl shadow-lg hover:shadow-2xl transform hover:-translate-y-3 transition-all duration-300 p-10 border-4 border-transparent hover:border-indigo-400">
+        <div class="text-5xl mb-6">English</div>
+        <h2 class="text-3xl font-bold text-gray-800 mb-2">English</h2>
+        <p class="text-gray-600">Continue in English</p>
+        <div class="absolute inset-0 rounded-2xl bg-gradient-to-br from-indigo-400 to-purple-500 opacity- opacity-0 group-hover:opacity-20 transition-opacity"></div>
+      </button>
+
+      <!-- हिंदी -->
+      <button onclick="selectLanguage('hi')"
+        class="group relative bg-white rounded-2xl shadow-lg hover:shadow-2xl transform hover:-translate-y-3 transition-all duration-300 p-10 border-4 border-transparent hover:border-pink-400">
+        <div class="text-7xl mb-6 devanagari">हिंदी</div>
+        <h2 class="text-3xl font-bold text-gray-800 mb-2 devanagari">हिंदी</h2>
+        <p class="text-gray-600 devanagari">हिंदी में जारी रखें</p>
+        <div class="absolute inset-0 rounded-2xl bg-gradient-to-br from-pink-400 to-red-500 opacity-0 group-hover:opacity-20 transition-opacity"></div>
+      </button>
+
+      <!-- मराठी -->
+      <button onclick="selectLanguage('mr')"
+        class="group relative bg-white rounded-2xl shadow-lg hover:shadow-2xl transform hover:-translate-y-3 transition-all duration-300 p-10 border-4 border-transparent hover:border-green-400">
+        <div class="text-7xl mb-6 devanagari">मराठी</div>
+        <h2 class="text-3xl font-bold text-gray-800 mb-2 devanagari">मराठी</h2>
+        <p class="text-gray-600 devanagari">मराठीत सुरू करा</p>
+        <div class="absolute inset-0 rounded-2xl bg-gradient-to-br from-green-400 to-teal-500 opacity-0 group-hover:opacity-20 transition-opacity"></div>
+      </button>
+
+    </div>
+
+    <!-- Footer Note -->
+    <p class="text-center text-gray-500 mt-12 text-sm">
+      Made with <span class="text-red-500">❤</span> for Maharashtra Board Students | Hackathon 2025
+    </p>
+  </div>
+
+  <!-- JavaScript to save language and redirect -->
+  <script src="../js/main.js"></script>
+  <script>
+    // Save selected language in localStorage and go to subjects page
+    function selectLanguage(lang) {
+      localStorage.setItem('userLanguage', lang);
+
+      // Optional: Show a quick toast
+      const toast = document.createElement('div');
+      toast.className = 'fixed bottom-8 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white px-8 py-4 rounded-full shadow-2xl text-lg animate-bounce z-50';
+      const names = { en: 'English', hi: 'हिंदी', mr: 'मराठी' };
+      toast.textContent = `${names[lang]} selected! 🚀`;
+      document.body.appendChild(toast);
+      setTimeout(() => toast.remove(), 2000);
+
+      // Redirect after small delay for animation
+      setTimeout(() => {
+        window.location.href = 'subjects.html';
+      }, 600);
+    }
+
+    // Auto-select if already chosen (e.g., user came back)
+    document.addEventListener('DOMContentLoaded', () => {
+      const saved = localStorage.getItem('userLanguage');
+      if (saved && ['en','hi','mr'].includes(saved)) {
+        // Optional: auto-redirect if language already selected
+        // window.location.href = 'subjects.html';
+      }
+    });
+  </script>
+
+</body>
+</html>

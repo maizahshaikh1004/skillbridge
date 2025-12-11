@@ -1,0 +1,272 @@
+<!-- pages/dashboard.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SkillBridge – My Dashboard</title>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="../css/style.css" />
+
+  <!-- Google Fonts for Devanagari -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Noto+Sans+Devanagari:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <!-- Chart.js for progress charts -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <style>
+    body { font-family: 'Poppins', 'Noto Sans Devanagari', sans-serif; }
+    .devanagari { font-family: 'Noto Sans Devanagari', sans-serif; }
+  </style>
+</head>
+
+<body class="bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 min-h-screen">
+
+  <!-- Header -->
+  <header class="bg-white shadow-md py-6 mb-8">
+    <div class="container mx-auto px-4 text-center">
+      <img src="../assets/logo.png" alt="SkillBridge Logo" class="h-16 mx-auto mb-4" />
+      <h1 id="pageTitle" class="text-4xl font-bold text-gray-800">My Dashboard</h1>
+      <!-- Replace or add below <h1 id="pageTitle"> -->
+<p id="dashboardWelcome" class="text-2xl text-indigo-600 mt-4 hidden"></p>
+      <p id="pageSubtitle" class="text-xl text-gray-600 mt-2">Track your learning journey</p>
+    </div>
+  </header>
+
+  <main class="container mx-auto px-4 max-w-7xl">
+
+    <!-- Stats Overview -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+      <div class="bg-white rounded-2xl shadow-lg p-6 text-center transform hover:scale-105 transition-transform">
+        <div class="text-5xl mb-3">🏆</div>
+        <h3 class="text-3xl font-bold text-indigo-600" id="totalQuizzes">0</h3>
+        <p class="text-gray-600 devanagari" id="quizzesLabel">Quizzes Completed</p>
+      </div>
+      <div class="bg-white rounded-2xl shadow-lg p-6 text-center transform hover:scale-105 transition-transform">
+        <div class="text-5xl mb-3">⭐</div>
+        <h3 class="text-3xl font-bold text-purple-600" id="avgScore">0%</h3>
+        <p class="text-gray-600 devanagari" id="avgLabel">Average Score</p>
+      </div>
+      <div class="bg-white rounded-2xl shadow-lg p-6 text-center transform hover:scale-105 transition-transform">
+        <div class="text-5xl mb-3">🔥</div>
+        <h3 class="text-3xl font-bold text-orange-600" id="streak">0</h3>
+        <p class="text-gray-600 devanagari" id="streakLabel">Day Streak</p>
+      </div>
+      <div class="bg-white rounded-2xl shadow-lg p-6 text-center transform hover:scale-105 transition-transform">
+        <div class="text-5xl mb-3">📚</div>
+        <h3 class="text-3xl font-bold text-green-600" id="totalQuestions">0</h3>
+        <p class="text-gray-600 devanagari" id="questionsLabel">Questions Answered</p>
+      </div>
+    </div>
+
+    <!-- Progress Chart -->
+    <div class="bg-white rounded-3xl shadow-xl p-8 mb-12">
+      <h2 class="text-3xl font-bold text-gray-800 mb-6 text-center devanagari" id="progressTitle">Your Progress Over Time</h2>
+      <div class="max-w-4xl mx-auto">
+        <canvas id="progressChart"></canvas>
+      </div>
+      <p class="text-center text-gray-500 mt-6 text-sm devanagari" id="noDataText">Start taking quizzes to see your progress!</p>
+    </div>
+
+    <!-- Recent Activity -->
+    <div class="bg-white rounded-3xl shadow-xl p-8">
+      <h2 class="text-3xl font-bold text-gray-800 mb-6 devanagari" id="recentTitle">Recent Quizzes</h2>
+      <div id="recentList" class="space-y-6">
+        <!-- Recent quizzes injected here by JS -->
+      </div>
+      <div id="noQuizzes" class="text-center py-12 text-gray-500 devanagari">
+        <div class="text-6xl mb-4">📭</div>
+        <p class="text-xl">No quizzes completed yet. Start learning!</p>
+        <a href="subjects.html" class="mt-6 inline-block bg-indigo-600 text-white px-8 py-3 rounded-full hover:bg-indigo-700 font-bold">
+          Go to Subjects
+        </a>
+      </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="text-center mt-12">
+      <a href="subjects.html" class="inline-block bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-10 py-5 rounded-full text-xl font-bold hover:shadow-2xl transform hover:-translate-y-1 transition-all mr-6">
+        Continue Learning
+      </a>
+      <a href="upload.html" class="inline-block bg-green-600 text-white px-10 py-5 rounded-full text-xl font-bold hover:bg-green-700 transform hover:-translate-y-1 transition-all">
+        Upload New Notes
+      </a>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="text-center text-gray-500 mt-16 py-8 text-sm">
+    Made with ❤️ for Maharashtra Board Students | Hackathon 2025
+  </footer>
+
+  <script src="../js/main.js"></script>
+<script>
+  // === MULTILINGUAL TRANSLATIONS ===
+  const translations = {
+    en: {
+      pageTitle: "My Dashboard",
+      pageSubtitle: "Track your learning journey",
+      quizzesLabel: "Quizzes Completed",
+      avgLabel: "Average Score",
+      streakLabel: "Day Streak",
+      questionsLabel: "Questions Answered",
+      progressTitle: "Your Progress Over Time",
+      noDataText: "Start taking quizzes to see your progress!",
+      recentTitle: "Recent Quizzes",
+      noQuizzes: "No quizzes completed yet. Start learning!",
+      customQuiz: "Custom Quiz from Notes",
+      scoreText: "Score",
+      onDate: "on",
+      welcomeUser: (name) => `Hello, ${name}! Here's your progress 🌟`,
+      welcomeGuest: "Hello, Guest Learner! Keep up the great work! 🌟"
+    },
+    hi: {
+      pageTitle: "मेरा डैशबोर्ड",
+      pageSubtitle: "अपनी सीखने की यात्रा ट्रैक करें",
+      quizzesLabel: "क्विज़ पूरी की",
+      avgLabel: "औसत स्कोर",
+      streakLabel: "दिनों की स्ट्रीक",
+      questionsLabel: "प्रश्नों के उत्तर दिए",
+      progressTitle: "समय के साथ आपकी प्रगति",
+      noDataText: "अपनी प्रगति देखने के लिए क्विज़ लेना शुरू करें!",
+      recentTitle: "हाल की क्विज़",
+      noQuizzes: "अभी तक कोई क्विज़ पूरी नहीं की। सीखना शुरू करें!",
+      customQuiz: "नोट्स से कस्टम क्विज़",
+      scoreText: "स्कोर",
+      onDate: "को",
+      welcomeUser: (name) => `नमस्ते, ${name}! यहाँ आपकी प्रगति है 🌟`,
+      welcomeGuest: "नमस्ते, अतिथि शिक्षार्थी! शानदार काम करते रहें! 🌟"
+    },
+    mr: {
+      pageTitle: "माझे डॅशबोर्ड",
+      pageSubtitle: "तुमच्या शिकण्याच्या प्रवासाचा मागोवा घ्या",
+      quizzesLabel: "पूर्ण केलेल्या क्विझ",
+      avgLabel: "सरासरी गुण",
+      streakLabel: "दिवसांची स्ट्रीक",
+      questionsLabel: "उत्तर दिलेली प्रश्न",
+      progressTitle: "काळानुसार तुमची प्रगति",
+      noDataText: "तुमची प्रगति पाहण्यासाठी क्विझ घेणे सुरू करा!",
+      recentTitle: "अलीकडील क्विझ",
+      noQuizzes: "अद्याप कोणतीही क्विझ पूर्ण केलेली नाही. शिकणे सुरू करा!",
+      customQuiz: "नोट्सपासून कस्टम क्विझ",
+      scoreText: "गुण",
+      onDate: "ला",
+      welcomeUser: (name) => `नमस्कार, ${name}! ही तुमची प्रगती आहे 🌟`,
+      welcomeGuest: "नमस्कार, पाहुणे शिक्षार्थी! उत्तम काम सुरू ठेवा! 🌟"
+    }
+  };
+
+  const lang = localStorage.getItem('userLanguage') || 'en';
+  const t = translations[lang];
+
+  // Apply static translations
+  document.getElementById('pageTitle').textContent = t.pageTitle;
+  document.getElementById('pageSubtitle').textContent = t.pageSubtitle;
+  document.getElementById('quizzesLabel').textContent = t.quizzesLabel;
+  document.getElementById('avgLabel').textContent = t.avgLabel;
+  document.getElementById('streakLabel').textContent = t.streakLabel;
+  document.getElementById('questionsLabel').textContent = t.questionsLabel;
+  document.getElementById('progressTitle').textContent = t.progressTitle;
+  document.getElementById('noDataText').textContent = t.noDataText;
+  document.getElementById('recentTitle').textContent = t.recentTitle;
+
+  // Main Dashboard Logic
+  document.addEventListener('DOMContentLoaded', () => {
+    const session = JSON.parse(localStorage.getItem('skillbridge_session') || '{}');
+    const welcomeEl = document.getElementById('dashboardWelcome');
+
+    // Personalized Welcome
+    if (session.userName) {
+      welcomeEl.textContent = t.welcomeUser(session.userName);
+      welcomeEl.classList.remove('hidden');
+    } else if (session.loginType === 'guest' || session.loginType === 'start') {
+      welcomeEl.textContent = t.welcomeGuest;
+      welcomeEl.classList.remove('hidden');
+    }
+
+    // Load quiz history
+    let history = JSON.parse(localStorage.getItem('quizHistory') || '[]');
+
+    // Add latest quiz result if available
+    if (localStorage.getItem('lastScore') && localStorage.getItem('lastTotal')) {
+      const lastQuiz = {
+        score: parseInt(localStorage.getItem('lastScore')),
+        total: parseInt(localStorage.getItem('lastTotal')),
+        percentage: Math.round((parseInt(localStorage.getItem('lastScore')) / parseInt(localStorage.getItem('lastTotal'))) * 100),
+        date: new Date().toLocaleDateString('en-GB'),
+        subject: localStorage.getItem('customQuiz') ? t.customQuiz : 'General',
+        timestamp: Date.now()
+      };
+      history.push(lastQuiz);
+      localStorage.setItem('quizHistory', JSON.stringify(history));
+
+      // Clear temporary quiz data
+      localStorage.removeItem('lastScore');
+      localStorage.removeItem('lastTotal');
+      localStorage.removeItem('lastAnswers');
+      localStorage.removeItem('lastQuestions');
+      localStorage.removeItem('customQuiz'); // optional
+    }
+
+    // Update Stats
+    const totalQuizzes = history.length;
+    const avgScore = totalQuizzes > 0 ? Math.round(history.reduce((a, b) => a + b.percentage, 0) / totalQuizzes) : 0;
+    const totalQuestions = history.reduce((a, b) => a + b.total, 0, 0);
+
+    document.getElementById('totalQuizzes').textContent = totalQuizzes;
+    document.getElementById('avgScore').textContent = avgScore + '%';
+    document.getElementById('totalQuestions').textContent = totalQuestions;
+    document.getElementById('streak').textContent = totalQuizzes > 0 ? '1' : '0'; // Simple streak
+
+    // Progress Chart
+    const ctx = document.getElementById('progressChart')?.getContext('2d');
+    if (ctx && totalQuizzes > 0) {
+      document.getElementById('noDataText').classList.add('hidden');
+      new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: history.map((_, i) => `Quiz ${i + 1}`),
+          datasets: [{
+            label: 'Score %',
+            data: history.map(h => h.percentage),
+            borderColor: '#6366f1',
+            backgroundColor: 'rgba(99, 102, 241, 0.2)',
+            tension: 0.4,
+            fill: true
+          }]
+        },
+        options: {
+          responsive: true,
+          plugins: { legend: { display: false } },
+          scales: { y: { min: 0, max: 100 } }
+        }
+      });
+    }
+
+    // Recent Quizzes List
+    const recentList = document.getElementById('recentList');
+    const noQuizzesDiv = document.getElementById('noQuizzes');
+
+    if (history.length === 0) {
+      noQuizzesDiv.classList.remove('hidden');
+    } else {
+      noQuizzesDiv.classList.add('hidden');
+      history.slice().reverse().slice(0, 5).forEach(entry => {
+        const div = document.createElement('div');
+        div.className = "flex justify-between items-center bg-gray-50 rounded-xl p-6 hover:bg-gray-100 transition-colors";
+        div.innerHTML = `
+          <div>
+            <h4 class="text-xl font-bold text-gray-800">${entry.subject}</h4>
+            <p class="text-gray-600">${t.scoreText}: ${entry.score}/${entry.total} (${entry.percentage}%) • ${entry.date}</p>
+          </div>
+          <div class="text-4xl">${entry.percentage >= 80 ? '🌟' : entry.percentage >= 60 ? '👍' : '💪'}</div>
+        `;
+        recentList.appendChild(div);
+      });
+    }
+  });
+</script>
+</body>
+</html>

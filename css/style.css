@@ -1,0 +1,171 @@
+/* css/style.css */
+/* SkillBridge – Official Global Styles (English + हिंदी + मराठी) */
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Hind+Vadodara:wght@400;500;600;700&family=Fredoka+One&display=swap');
+
+/* Colour Palette – Fun yet Professional */
+:root {
+  --sky:      #0ea5e9;
+  --emerald:  #10b981;
+  --amber:    #f59e0b;
+  --pink:     #ec4899;
+  --yellow:   #fbbf24;
+  --teal:     #14b8a6;
+  --purple:   #8b5cf6;
+
+  --bg-gradient: linear-gradient(135deg, #bae6fd 0%, #86efac 50%, #fde68a 100%);
+  --card-shadow: 0 20px 40px rgba(0,0,0,0.1);
+  --hover-shadow: 0 25px 60px rgba(0,0,0,0.18);
+  --transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background: var(--bg-gradient);
+  background-attachment: fixed;
+  min-height: 100vh;
+  color: #1e293b;
+  line-height: 1.6;
+}
+
+/* English – Default */
+.text-en { font-family: 'Poppins', sans-serif; }
+
+/* हिंदी & मराठी – Devanagari */
+.text-hi, .text-mr, .devanagari {
+  font-family: 'Hind Vadodara', sans-serif;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+
+/* Big friendly titles */
+.title {
+  font-family: 'Fredoka One', cursive;
+  color: #1e293b;
+  text-shadow: 2px 2px 10px rgba(0,0,0,0.1);
+}
+
+/* Cards */
+.card {
+  background: white;
+  border-radius: 1.75rem;
+  box-shadow: var(--card-shadow);
+  transition: var(--transition);
+  overflow: hidden;
+  position: relative;
+}
+
+.card:hover {
+  transform: translateY(-12px);
+  box-shadow: var(--hover-shadow);
+}
+
+/* Colourful top accent bar on every card */
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 10px;
+  background: linear-gradient(90deg, var(--amber), var(--pink), var(--emerald), var(--sky));
+}
+
+/* Buttons */
+.btn {
+  font-weight: 600;
+  border-radius: 1rem;
+  padding: 0.9rem 2rem;
+  font-size: 1.1rem;
+  transition: var(--transition);
+  cursor: pointer;
+  border: none;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--sky), var(--emerald));
+  color: white;
+}
+
+.btn-primary:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px rgba(16, 185, 129, 0.4);
+}
+
+.btn-guest {
+  background: linear-gradient(135deg, var(--yellow), var(--amber));
+  color: #1f2937;
+  font-size: 1.4rem;
+  padding: 1.3rem;
+  font-weight: 700;
+}
+
+.btn-guest:hover {
+  transform: scale(1.05);
+  box-shadow: 0 20px 40px rgba(251, 191, 36, 0.4);
+}
+
+.btn-upload {
+  background: linear-gradient(135deg, var(--purple), var(--pink));
+  color: white;
+}
+
+/* Language Selection Buttons */
+.lang-btn {
+  width: 180px;
+  height: 180px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 2rem;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: white;
+  box-shadow: var(--card-shadow);
+  transition: var(--transition);
+}
+
+.lang-btn:hover {
+  transform: scale(1.1) translateY(-10px);
+}
+
+.lang-en { background: linear-gradient(135deg, #60a5fa, #3b82f6); }
+.lang-hi { background: linear-gradient(135deg, #fb923c, #f97316); }
+.lang-mr { background: linear-gradient(135deg, #34d399, #10b981); }
+
+/* Subject Cards */
+.subject-card {
+  background: white;
+  padding: 2rem;
+  border-radius: 1.5rem;
+  text-align: center;
+  box-shadow: var(--card-shadow);
+  transition: var(--transition);
+}
+
+.subject-card:hover {
+  transform: translateY(-10px);
+}
+
+/* Utility */
+.text-gradient {
+  background: linear-gradient(90deg, var(--pink), var(--amber));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.backdrop-blur {
+  backdrop-filter: blur(10px);
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+  .lang-btn {
+    width: 140px;
+    height: 140px;
+    font-size: 1.2rem;
+  }
+  .title { font-size: 3rem; }
+}
